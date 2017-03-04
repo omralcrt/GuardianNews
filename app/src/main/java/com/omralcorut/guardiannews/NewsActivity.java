@@ -4,11 +4,15 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<List<News>> {
+        implements LoaderManager.LoaderCallbacks<List<News>>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String NEWS_REQUEST_URL =
-            "https://content.guardianapis.com/search?api-key=b36b5eaf-651c-4d40-9a18-97d0acb68793";
+            "https://content.guardianapis.com/search";
 
     private static final int NEWS_LOADER_ID = 1;
 
@@ -45,6 +49,10 @@ public class NewsActivity extends AppCompatActivity
 
         //Connect listView with adapter
         newsListView.setAdapter(adapter);
+
+        //Apply options
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
 
 
         //When click item, open webView about that news
@@ -81,10 +89,35 @@ public class NewsActivity extends AppCompatActivity
 
     }
 
+    //When option is changed, apply it
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.settings_section_key))){
+            adapter.clear();
+            emptyStateTextView.setVisibility(View.GONE);
+
+            View loadingIndicator = findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(View.VISIBLE);
+
+            getLoaderManager().restartLoader(NEWS_LOADER_ID, null, this);
+        }
+    }
+
     //Load Json parsing
     @Override
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
-        return new NewsLoader(this, NEWS_REQUEST_URL);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String section = sharedPrefs.getString(
+                getString(R.string.settings_section_key),
+                getString(R.string.settings_section_default)
+        );
+        Uri baseUri = Uri.parse(NEWS_REQUEST_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("api-key", "b36b5eaf-651c-4d40-9a18-97d0acb68793");
+        if (!section.equals("all")) {
+            uriBuilder.appendQueryParameter("section", section);
+        }
+        return new NewsLoader(this, uriBuilder.toString());
     }
 
     //After loading, display result
@@ -107,5 +140,22 @@ public class NewsActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<List<News>> loader) {
         adapter.clear();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

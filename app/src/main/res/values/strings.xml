@@ -2,4 +2,31 @@
     <string name="app_name">Guardian News</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="no_news">No News Found</string>
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">News Settings</string>
+    
+    <string name="settings_section_label">Section</string>
+    <string name="settings_section_key">section</string>
+    <string name="settings_section_default">@string/settings_section_all_value</string>
+
+    <string name="settings_section_all_label">All Sections</string>
+    <string name="settings_section_all_value">all</string>
+
+    <string name="settings_section_uk_label">UK News</string>
+    <string name="settings_section_uk_value">uk-news</string>
+
+    <string name="settings_section_world_label">World</string>
+    <string name="settings_section_world_value">world</string>
+
+    <string name="settings_section_sport_label">Sport</string>
+    <string name="settings_section_sport_value">sport</string>
+
+    <string name="settings_section_opinion_label">Opinion</string>
+    <string name="settings_section_opinion_value">commentisfree</string>
+
+    <string name="settings_section_culture_label">Culture</string>
+    <string name="settings_section_culture_value">culture</string>
+
+    <string name="settings_section_business_label">Business</string>
+    <string name="settings_section_business_value">business</string>
 </resources>
