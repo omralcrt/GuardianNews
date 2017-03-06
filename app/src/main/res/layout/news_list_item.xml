@@ -18,7 +18,8 @@
         android:layout_gravity="center_vertical"
         android:textSize="16sp"
         android:maxLines="2"
-        tools:text="The Nixon-Kennedy presidential debates: from the archive, 1960"
+        android:ellipsize="end"
+        tools:text="The Nixon-Kennedy presidential debates: from the archive, 1960 and something"
         />
     
     <LinearLayout
