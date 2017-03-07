@@ -31,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             String stringValue = newValue.toString();
-            preference.setSummary(stringValue);
+            preference.setSummary(getLabelGivenValue(stringValue));
             return true;
         }
 
@@ -41,6 +41,17 @@ public class SettingsActivity extends AppCompatActivity {
                     PreferenceManager.getDefaultSharedPreferences(preference.getContext());
             String preferenceString = preferences.getString(preference.getKey(), "");
             onPreferenceChange(preference, preferenceString);
+        }
+
+        private String getLabelGivenValue(String value) {
+            String result = "All Sections";
+            String values[] = getResources().getStringArray(R.array.settings_section_values);
+            for (int i = 0; i < values.length; i++) {
+                if (value.equals(values[i])) {
+                    result = getResources().getStringArray(R.array.settings_section_labels)[i];
+                }
+            }
+            return result;
         }
     }
 }
