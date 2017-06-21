@@ -1,4 +1,4 @@
-#Guardian News Android Application
+# Guardian News Android Application
 
 Sample JSON parsing native Android Application for pulling Guardian News and show title, section and date of publishing.
 
@@ -10,14 +10,17 @@ Data comes from [Guardian News API](https://content.guardianapis.com/search?api-
 
 More info on the Guardian News API available at: [http://open-platform.theguardian.com/documentation/](http://open-platform.theguardian.com/documentation/)
 
-#Installation & Usage
+## Screenshots
+<img src="screenshots/gn_screenshot_1.png" width="20%"> <img src="screenshots/gn_screenshot_2.png" width="20%"> <img src="screenshots/gn_screenshot_3.png" width="20%">
+
+## Installation & Usage
 ```bash
-# Clone the repository
-$ git clone https://github.com/omralcrt/GuardianNews.git
+# Clone the repository
+$ git clone https://github.com/omralcrt/GuardianNews.git
 
 # Import project to Android Studio
 ```
-##License
+## License
 
 	Copyright 2017 Ömral Cörüt
 
