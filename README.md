@@ -21,7 +21,6 @@ $ git clone https://github.com/omralcrt/GuardianNews.git
 # Import project to Android Studio
 ```
 ## License
-
 	Copyright 2017 Ömral Cörüt
 
     Licensed under the Apache License, Version 2.0 (the "License");
